@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+   
+    
+   
+
+    <div class="container">
+        <div class="inner">
+            <div class="box">
+                <p class="number">
+                    <img src="./images/logo.jpg" alt="tweet" id="tweet">
+                </p>
+                <div class="text">
+                  <i class="start fas fa-quote-left"></i>
+                  <p id="quotes" class="quotes"></p>
+                  <p id="author" class="author"></p>
+                </div>
+                <label class="button">
+                      <p id="newq">New Quotes</p>
+                </label>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        
+        const quotes = document.getElementById('quotes');
+        const author= document.getElementById('author');
+        const btn= document.getElementById('newq');
+        const tweet= document.getElementById('tweet');
+
+        let realdata="";
+        let content="";
+        const getnewquote = ()=>{
+          
+            let index= Math.floor((Math.random()*realdata.length));
+            
+            content = realdata[index];
+            console.log(index);
+            quotes.innerText= `${content.text}`;
+            if(content.author==null){ author.innerText='UnKnown'; }
+            else{
+                author.innerText=`${content.author}`;
+            } 
+
+        }
+        
+        const getQuotes = async()=>{
+            const api="https://type.fit/api/quotes";
+
+            try{
+                 let data = await fetch(api);
+                realdata= await data.json();
+                 //console.log(realdata);
+                 getnewquote();
+            }catch(err)
+            {}
+            
+        };
+        
+        btn.addEventListener('click',getQuotes);
+        
+        getQuotes();
+       
+
+    </script>
+</body>
+</html>
